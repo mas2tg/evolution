@@ -21,9 +21,9 @@ public:
     float _xDisp;
     float _yDisp;
     float _mass; //TODO:
-    float _speed; //TODO:
+    int _speed; //TODO:
     CircleEntity(){};
-    CircleEntity(int x, int y, float xDisp, float yDisp, float radius, sf::CircleShape cs):_xDisp(xDisp), _yDisp(yDisp), m_circle(cs){
+    CircleEntity(int x, int y, float xDisp, float yDisp, float radius, int speed, sf::CircleShape cs):_xDisp(xDisp), _yDisp(yDisp), _speed(speed), m_circle(cs){
         m_circle.setPosition(x, y);
         m_circle.setRadius(radius);
     }
@@ -42,9 +42,9 @@ int main(int argc, const char * argv[]) {
     std::cout << "Hello, World!\n";
     
     sf::RenderWindow window( sf::VideoMode(WIDTH, HEIGHT), "Evolution Game");
-    CircleEntity circle1(130, 130, 0.1f, 0.1f, 75, sf::CircleShape());
-    CircleEntity circle2(500, 70, 0.1f, -0.1f, 50, sf::CircleShape());
-    CircleEntity circle3(300, 300, -0.1f, -0.1f, 25, sf::CircleShape());
+    CircleEntity circle1(130, 130, 0.1f, 0.1f, 75, 1, sf::CircleShape());
+    CircleEntity circle2(500, 70, 0.1f, -0.1f, 50, 2, sf::CircleShape());
+    CircleEntity circle3(300, 300, -0.1f, -0.1f, 25, 3, sf::CircleShape());
 
     
     std::vector<CircleEntity *> circles;
@@ -84,15 +84,15 @@ int main(int argc, const char * argv[]) {
             
             // HANDLE EDGES OF THE SCREEN
             if (circles[i]->getCircleShape()->getPosition().x > WIDTH-circles[i]->getCircleShape()->getRadius()*2)
-                circles[i]->_xDisp = -.1f;
+                circles[i]->_xDisp = -.1f*circles[i]->_speed;
                 //circle->move(-0.1f, 0.1);
             else if (circles[i]->getCircleShape()->getPosition().x < 0)
-                circles[i]->_xDisp = .1f;
+                circles[i]->_xDisp = .1f*circles[i]->_speed;
             
             if (circles[i]->getCircleShape()->getPosition().y > HEIGHT-circles[i]->getCircleShape()->getRadius()*2)
-                circles[i]->_yDisp = -.1f;
+                circles[i]->_yDisp = -.1f*circles[i]->_speed;
             else if (circles[i]->getCircleShape()->getPosition().y < 0)
-                circles[i]->_yDisp = .1f;
+                circles[i]->_yDisp = .1f*circles[i]->_speed;
             
             // HANDLE OTHER OBJECTS
             for (int j = i+1; j < circles.size(); j++){
